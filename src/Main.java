@@ -1,15 +1,33 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Map;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Vertex<String> v1 = new Vertex<>("A");
+        Vertex<String> v2 = new Vertex<>("B");
+        Vertex<String> v3 = new Vertex<>("C");
+        Vertex<String> v4 = new Vertex<>("D");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        WeightedGraph<String> graph = new WeightedGraph<>();
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        graph.addVertex(v3);
+        graph.addVertex(v4);
+
+        graph.addEdge(v1, v2, 1.0);
+        graph.addEdge(v1, v3, 4.0);
+        graph.addEdge(v2, v3, 2.0);
+        graph.addEdge(v2, v4, 5.0);
+        graph.addEdge(v3, v4, 1.0);
+
+        System.out.println("BFS starting from A:");
+        BreadthFirstSearch<String> bfs = new BreadthFirstSearch<>();
+        bfs.search(v1);
+
+        System.out.println("\nDijkstra distances from A:");
+        DijkstraSearch<String> dijkstra = new DijkstraSearch<>();
+        Map<Vertex<String>, Double> distances = dijkstra.dijkstra(v1);
+        for (Map.Entry<Vertex<String>, Double> e : distances.entrySet()) {
+            System.out.println("Distance A->" + e.getKey().getData() + " = " + e.getValue());
         }
     }
 }
